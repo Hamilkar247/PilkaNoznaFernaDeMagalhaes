@@ -1,5 +1,6 @@
 import random
 import logging
+from time import sleep
 
 class Equipa():
 
@@ -14,17 +15,20 @@ class Equipa():
     def __init__(self, nomeEquipa, numeroAdversario):
         self.nomeEquipa = nomeEquipa
         self.numeroAdversario = numeroAdversario
-        self.adversario = self.randomizacao(numeroAdversario, 0, 10)
+        self.memberosEquipa = self.randomizacao(numeroAdversario, 0, 100)
 
     def printEquipa(self):
         print("------------")
         print(self.nomeEquipa)
-        print(self.adversario)
+        print(self.memberosEquipa)
+
+    def nomeEquipaGet(self):
+        return self.nomeEquipa
 
     def escolherAdversario(self):
         escolher = random.randint(0, self.numeroAdversario-1)
         #print(f"escolher: {escolher}")
-        return self.adversario[escolher]
+        return self.memberosEquipa[escolher]
 
 class Evento():
 
@@ -35,9 +39,10 @@ class Evento():
         advocate=defensivo.escolherAdversario()
         if variavel+ataque>advocate:
             print("GOOOL")
+            return 1
         else:
             print("Chyba celował panu Bogu w okno")
-
+            return 0
 
     def __init__(self):
         pass
@@ -46,6 +51,8 @@ def partida(primeiro, segundo):
     evento = Evento()
     primeiro.printEquipa()
     segundo.printEquipa()
+    golPrimeiro=0
+    golSegundo=0
     iniciativa = random.randint(1,2)
     if iniciativa == 1:
          evento.chuter(primeiro, segundo)
@@ -55,23 +62,36 @@ def partida(primeiro, segundo):
          iniciativa = 1
 
     numeroMinuto=0
-    while numeroMinuto<3:
-        numeroMinuto = numeroMinuto + 1
+    while numeroMinuto<90:
+        numeroMinuto = numeroMinuto + 10
         print(f"numeroMinuto: {numeroMinuto}")
         primeiro.escolherAdversario()
 
         if iniciativa == 1:
-             evento.chuter(primeiro, segundo)
+             golPrimeiro = golPrimeiro + evento.chuter(primeiro, segundo)
              iniciativa = 0
         else:
-             evento.chuter(segundo, primeiro)
+             golSegundo = golSegundo + evento.chuter(segundo, primeiro)
              iniciativa = 1
+        sleep(1)
+    #contagem
+    print("----------------")
+    print("Koniec meczu")
+    print(f"{primeiro.nomeEquipaGet()} : {segundo.nomeEquipaGet()}")
+    print(f"{golPrimeiro} : {golSegundo}")
 
+
+class AdministrarEquipa():
+
+     def __init__(self, nomoEquipa):
+         pass
 
 def main():
     WislaKrakow = Equipa("WislaKrakow", 5)
+    administrarWislaKrakow = AdministrarEquipa(WislaKrakow)
     LegiaWarszawa = Equipa("LegiaWarszawa", 5)
     partida(WislaKrakow, LegiaWarszawa)
 
 if __name__ == "__main__":
     main()
+
