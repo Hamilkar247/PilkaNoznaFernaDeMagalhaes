@@ -2,6 +2,24 @@ import random
 import logging
 from time import sleep
 
+class MemberoEquipa():
+
+    def randomizacao(self, contagemDeElementos, minimo, maximo):
+        numero = 0;
+        serie = []
+        while(numero < contagemDeElementos):
+            numero = numero + 1
+            serie.append(random.randint(minimo, maximo))
+        return serie
+
+    def __init__(self):
+        serie_primeiro_nome = ["Mateusz", "Robert", "Jan", "Jakub", "Tomasz"]
+        serie_sobrenome = ["Kusy", "Latusek", "Woliński", "Jastrzębski"]
+        self.potencial_primeiro_nome = random.randint(0,4)
+        self.potencial_sobrenome = random.randint(0,4)
+        self.habilidade = random.randint(0,100)
+        self.idade = random.randint(14, 34)
+
 class Equipa():
 
     def randomizacao(self, contagemDeElementos, minimo, maximo):
